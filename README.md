@@ -1,5 +1,10 @@
 # AirWorkSpace
 
+## Desing and Plannification
+
+Miro project
+Figma desing: https://www.figma.com/file/aKL5w0Dbwe81i4g5MXmGR6/AirWorkSpace?node-id=0%3A1
+
 ## API Endpoints
 
 All API Request must be prepended with `/api/`
