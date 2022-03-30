@@ -28,7 +28,7 @@ METHOD | ENDPOINT         | TOKEN | ROLE | DESCRIPTION              | POST PARAM
 GET    | /user/  | YES     | Admin| Get all users           | - | `profile`
 GET    | /user/:id   | YES | Admin | Get one user            | - | `profile`
 PUT    | /user/:id   | YES | Admin | Update one user            | - | `profile`
-DELETE | /user/:id   | YES | Admin | Delete one user            | - | `profile`
+DELETE | /user/:id   | YES | Admin | Delete one user            | - | 
 GET    | /user/profile   | YES     | | Get My Profile            | - | `profile`
 PUT    | /user/profile    | YES     | | Update My Profile            | - | `profile`
 DELETE | /user/profile    | YES     | Admin | Delete a user            | - |
