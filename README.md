@@ -25,9 +25,13 @@ POST   | /auth/login      | -     |      | User Login         | `email`, `passwo
 
 METHOD | ENDPOINT         | TOKEN | ROLE | DESCRIPTION              | POST PARAMS                                     | RETURNS
 -------|------------------|-------|------|--------------------|-------------------------------------------------|--------------------
-GET    | /user/profile/:id    | YES     | | Get My Profile            | - | `profile`
-PATCH  | /user/profile/:id    | YES     | | Update My Profile            | - | `profile`
-DELETE | /user/profile/:id    | YES     | Admin | Delete a user            | - |
+GET    | /user/  | YES     | Admin| Get all users           | - | `profile`
+GET    | /user/:id   | YES | Admin | Get one user            | - | `profile`
+PUT    | /user/:id   | YES | Admin | Update one user            | - | `profile`
+DELETE | /user/:id   | YES | Admin | Delete one user            | - | `profile`
+GET    | /user/profile   | YES     | | Get My Profile            | - | `profile`
+PUT    | /user/profile    | YES     | | Update My Profile            | - | `profile`
+DELETE | /user/profile    | YES     | Admin | Delete a user            | - |
 
 ### Center Endpoints
 
