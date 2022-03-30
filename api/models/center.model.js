@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const servicesSchema = require('./services.model')
 const ratePlanSchema = require('./ratePlan.model')
+const allotmentSchema = require('./allotment.model')
 
 
 const linksSchema = new mongoose.Schema({
@@ -57,7 +58,8 @@ const centerSchema = new mongoose.Schema({
     },
     links: [linksSchema],
     services: [servicesSchema],
-    ratePlan: [ratePlanSchema]
+    ratePlan: [ratePlanSchema],
+    allotment: [allotmentSchema]
 })
 
 const centerModel = mongoose.Model('center',centerSchema)

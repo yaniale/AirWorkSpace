@@ -1,7 +1,5 @@
 const mongoose = require('mongoose')
 
-const servicesSchema = require('./services.model')
-
 const ratePlanSchema = new mongoose.Schema({
     name: {
         type: String
@@ -33,8 +31,7 @@ const ratePlanSchema = new mongoose.Schema({
     },
     minBookingDays: {
         type: Number
-    },
-    servicesIncluded: [servicesSchema]
+    }
 })
 
 module.exports = ratePlanSchema
