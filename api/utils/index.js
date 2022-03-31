@@ -22,8 +22,8 @@ const checkAuth = (req, res, next) => {
   })
 }
 
-const checkRole = (req, res, next) => {
-  if (res.locals.user?.role === 'admin' || res.locals.user?.role === 'member') {
+const checkHost = (req, res, next) => {
+  if (res.locals.user?.role === 'admin' || res.locals.user?.role === 'host') {
     next()
   } else {
     res.status(403).json('Error: You\'re not authorized to perform this action.')
@@ -40,6 +40,6 @@ const checkAdmin = (req, res, next) => {
 
 module.exports = {
   checkAuth,
-  checkRole,
+  checkHost,
   checkAdmin
 }

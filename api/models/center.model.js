@@ -59,8 +59,12 @@ const centerSchema = new mongoose.Schema({
     links: [linksSchema],
     services: [servicesSchema],
     ratePlan: [ratePlanSchema],
-    allotment: [allotmentSchema]
+    allotment: [allotmentSchema],
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+    }
 })
 
-const centerModel = mongoose.Model('center',centerSchema)
+const centerModel = mongoose.model('center',centerSchema)
 module.exports = centerModel
