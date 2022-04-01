@@ -14,7 +14,7 @@ async function createCenter(req, res, next) {
 
 async function getAllCenters(req, res, next) {
     try {
-        const centers = await Center.find()
+        const centers = await Center.find(req.query || {})
         res.status(200).send(centers)
     } catch (error) {
         next(error)
