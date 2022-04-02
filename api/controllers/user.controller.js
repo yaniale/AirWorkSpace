@@ -59,6 +59,7 @@ async function deleteUser (req, res, next) {
 async function getOwnUser (req, res, next) {
   try {
     const user = await Users.findOne({ email: res.locals.user.email })
+      .populate('favourites')
     res.status(200).json({user: user})
   } catch (error) { next(error) }
 }
