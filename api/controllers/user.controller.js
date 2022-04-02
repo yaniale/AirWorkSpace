@@ -101,6 +101,35 @@ async function deleteOwnUser (req, res, next) {
   } catch (error) { next(error) }
 }
 
+async function getFavourites(req, res, next) {
+  try {
+    const user = await Users.findOne(res.locals.user.id)
+      .populate('favourites')
+    res.status(200).send(user.favourites) 
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function manageFavourite(req, res, next) {
+  try {
+    const user = await Users.findOne(res.locals.user.id)
+      .populate('favourites')
+    const checkExists = user.favourites.find(e => e.id === req.params.id)
+    if (!checkExists) {
+      user.favourites.push(req.params.id)
+      user.save()
+      res.status(200).send({message: 'Successfully added', data: user.favourites})
+    } else {
+      user.favourites = user.favourites.filter(e => e.id !== req.params.id)
+      user.save()
+      res.status(200).send({message: 'Successuflly removed', data: user.favourites})
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   getAllUsers,
   getUser,
@@ -109,4 +138,6 @@ module.exports = {
   getOwnUser,
   updateOwnUser,
   deleteOwnUser,
+  manageFavourite,
+  getFavourites
 }
