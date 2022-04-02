@@ -103,7 +103,7 @@ async function deleteOwnUser (req, res, next) {
 
 async function getFavourites(req, res, next) {
   try {
-    const user = await Users.findOne(res.locals.user.id)
+    const user = await Users.findById(res.locals.user.id)
       .populate('favourites')
     res.status(200).send(user.favourites) 
   } catch (error) {
