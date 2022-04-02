@@ -113,7 +113,7 @@ async function getFavourites(req, res, next) {
 
 async function manageFavourite(req, res, next) {
   try {
-    const user = await Users.findOne(res.locals.user.id)
+    const user = await Users.findById(res.locals.user.id)
       .populate('favourites')
     const checkExists = user.favourites.find(e => e.id === req.params.id)
     if (!checkExists) {
