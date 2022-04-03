@@ -21,16 +21,24 @@ const ratePlanSchema = new mongoose.Schema({
         type: Number
     },
     discount: {
-        type: Number
+        type: Number,
+        default: 0
     },
     tax: {
         type: Number
     },
     minBookingTime: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     minBookingDays: {
-        type: Number
+        type: Number,
+        default: 0
+    },
+    status: {
+        type: String,
+        enum: ['active', 'disabled'],
+        default: 'active'
     }
 })
 

@@ -77,10 +77,75 @@ async function deleteCenter(req, res, next) {
     }
 }
 
+async function manageAllotment(req, res, next) {
+    try {
+        const allotment = req.body
+        const center = await Center.findById(req.params.id)
+        
+        console.log(allotment.hasOwnProperty('idx'))
+
+        if (allotment.hasOwnProperty('idx')) {
+            if (allotment.operation === 'U') {
+                center.allotment[allotment.idx].quantity += allotment.quantity
+                center.save()
+                res.status(200).send({message: 'Allotment quantity updated', data: allotment})
+            }
+            if (allotment.operation === 'D') {
+                center.allotment[allotment.idx].status = 'disabled'
+                center.save()
+                res.status(200).send({message: 'Allotment removed', data: allotment})
+            }
+        } else {
+            center.allotment.push(allotment)
+            center.save()
+            res.status(200).send({message: 'Allotment added', data: allotment})
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
+async function manageRatePlan(req, res, next) {
+    try {
+        const ratePlan = req.body
+        const checkExists = ratePlan.hasOwnProperty('idx')
+        
+        const center = await Center.findById(req.params.id)
+            .populate('ratePlan')
+
+        if (checkExists) {
+            const idx = ratePlan.idx
+            if (ratePlan.operation === 'U') {
+                for (const param in ratePlan) {
+                    if (Object.hasOwnProperty.call(ratePlan, param)) {
+                        const element = ratePlan[param];
+                        center.ratePlan[idx][param] = element
+                    }
+                }
+                center.save()
+                res.status(200).send({message: 'Rate Plan updated', data: center.ratePlan[idx]})
+            } else if (ratePlan.operation === 'D') {
+                center.ratePlan[idx].status = 'disabled'
+                center.save()
+                res.status(200).send({message: 'Rate Plan disabled', data: center.ratePlan[idx]})
+            }
+        } else {
+            center.ratePlan.push(ratePlan)
+            center.save()
+            res.status(200).send({message: 'Rate Plan created', data: center.ratePlan[center.ratePlan.length-1]})
+        }
+
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     createCenter,
     getAllCenters,
     getCenter,
     updateCenter,
-    deleteCenter
+    deleteCenter,
+    manageAllotment,
+    manageRatePlan
 }

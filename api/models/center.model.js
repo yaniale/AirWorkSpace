@@ -60,6 +60,12 @@ const centerSchema = new mongoose.Schema({
     services: [servicesSchema],
     ratePlan: [ratePlanSchema],
     allotment: [allotmentSchema],
+    bookings: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'booking'
+        }
+    ],
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
