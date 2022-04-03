@@ -18,7 +18,7 @@ const ratePlanSchema = new mongoose.Schema({
         type: String
     },
     price: {
-        type: Number,
+        type: Number
     },
     discount: {
         type: Number,
