@@ -77,10 +77,39 @@ async function deleteCenter(req, res, next) {
     }
 }
 
+async function manageAllotment(req, res, next) {
+    try {
+        const allotment = req.body
+        const center = await Center.findById(req.params.id)
+        
+        console.log(allotment.hasOwnProperty('idx'))
+
+        if (allotment.hasOwnProperty('idx')) {
+            if (allotment.operation === 'U') {
+                center.allotment[allotment.idx].quantity += allotment.quantity
+                center.save()
+                res.status(200).send({message: 'Allotment quantity updated', data: allotment})
+            }
+            if (allotment.operation === 'D') {
+                center.allotment = center.allotment.filter(e => e !== center.allotment[allotment.idx])
+                center.save()
+                res.status(200).send({message: 'Allotment removed', data: allotment})
+            }
+        } else {
+            center.allotment.push(allotment)
+            center.save()
+            res.status(200).send({message: 'Allotment added', data: allotment})
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     createCenter,
     getAllCenters,
     getCenter,
     updateCenter,
-    deleteCenter
+    deleteCenter,
+    manageAllotment
 }
