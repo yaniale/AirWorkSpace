@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
+    avatar: { type: String},
     firstName: {
         type: String,
         required: true
@@ -40,6 +41,18 @@ const userSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    favourites: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'center'
+        }
+    ],
+    bookings: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'booking'
+        }
+    ],
     password: {
         type: String,
         required: true,

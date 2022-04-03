@@ -58,8 +58,9 @@ async function deleteUser (req, res, next) {
 
 async function getOwnUser (req, res, next) {
   try {
-    const user = await Users.find({ email: res.locals.user.email })
-    res.status(200).json(user)
+    const user = await Users.findOne({ email: res.locals.user.email })
+      .populate('favourites')
+    res.status(200).json({user: user})
   } catch (error) { next(error) }
 }
 
@@ -101,6 +102,35 @@ async function deleteOwnUser (req, res, next) {
   } catch (error) { next(error) }
 }
 
+async function getFavourites(req, res, next) {
+  try {
+    const user = await Users.findById(res.locals.user.id)
+      .populate('favourites')
+    res.status(200).send(user.favourites) 
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function manageFavourite(req, res, next) {
+  try {
+    const user = await Users.findOne({email: res.locals.user.email})
+      .populate('favourites')
+    const checkExists = user.favourites.find(e => e.id === req.params.id)
+    if (!checkExists) {
+      user.favourites.push(req.params.id)
+      user.save()
+      res.status(200).send({message: 'Successfully added', data: user.favourites})
+    } else {
+      user.favourites = user.favourites.filter(e => e.id !== req.params.id)
+      user.save()
+      res.status(200).send({message: 'Successuflly removed', data: user.favourites})
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   getAllUsers,
   getUser,
@@ -109,4 +139,6 @@ module.exports = {
   getOwnUser,
   updateOwnUser,
   deleteOwnUser,
+  manageFavourite,
+  getFavourites
 }

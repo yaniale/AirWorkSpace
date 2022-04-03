@@ -6,17 +6,17 @@ const {
 } = require('../utils')
 
 const {
-    getCenter,
+//    getCenter,
     getAllCenters,
-    updateCenter,
+//    updateCenter,
     createCenter,
-    deleteCenter
+//    deleteCenter
 } = require('../controllers/center.controller')
 
 router.get('/', getAllCenters)
 router.post('/', checkAuth, checkHost, createCenter)
-router.get('/:id', getCenter)
-router.put('/:id', checkAuth, checkHost, updateCenter)
-router.delete('/:id', checkAuth, checkHost, deleteCenter)
+// router.get('/:id', getCenter)
+// router.put('/:id', checkAuth, checkHost, updateCenter)
+// router.delete('/:id', checkAuth, checkHost, deleteCenter)
 
 module.exports = router

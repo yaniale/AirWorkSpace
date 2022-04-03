@@ -66,5 +66,7 @@ const centerSchema = new mongoose.Schema({
     }
 })
 
+centerSchema.index({name: 'query'})
+
 const centerModel = mongoose.model('center',centerSchema)
 module.exports = centerModel
