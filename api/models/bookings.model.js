@@ -32,7 +32,7 @@ const bookingsSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['open','confirmed','closed']
+        enum: ['open','confirmed','closed', 'cancelled']
     },
     customerId: {
         type: mongoose.Schema.Types.ObjectId,
