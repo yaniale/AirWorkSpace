@@ -14,6 +14,7 @@ async function getAllUsers (req, res, next) {
 async function getUser (req, res, next) {
   try {
     const user = await Users.findById(req.params.id)
+      .populate('bookings')
     res.status(200).json(user)
   } catch (error) { next(error) }
 }
@@ -60,6 +61,7 @@ async function getOwnUser (req, res, next) {
   try {
     const user = await Users.findOne({ email: res.locals.user.email })
       .populate('favourites')
+      .populate('bookings')
     res.status(200).json({user: user})
   } catch (error) { next(error) }
 }
