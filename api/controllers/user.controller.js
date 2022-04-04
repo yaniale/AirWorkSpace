@@ -62,6 +62,13 @@ async function getOwnUser (req, res, next) {
     const user = await Users.findOne({ email: res.locals.user.email })
       .populate('favourites')
       .populate('bookings')
+      .populate({
+        path: 'bookings',
+        populate: {
+          path: 'center',
+          model: 'center'
+        }
+      })
     res.status(200).json({user: user})
   } catch (error) { next(error) }
 }
