@@ -43,7 +43,19 @@ async function createBooking(req, res, next) {
     }
 }
 
+async function cancelBooking(req, res, next) {
+    try {
+        const booking = await Booking.findById(req.params.id)
+        booking.status = 'cancelled'
+        booking.save()
+        res.status(200).send({message: 'Booking Cancelled', data: booking})
+    } catch (error) {
+        
+    }
+}
+
 module.exports = {
     getUserBookings,
-    createBooking
+    createBooking,
+    cancelBooking
 }

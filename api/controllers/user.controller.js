@@ -31,7 +31,7 @@ async function updatetUser (req, res, next) {
     for (const param in req.body) { // For each param in the body, update user's param, checks for admin on role updates.
       if (Object.hasOwnProperty.call(req.body, param)) {
         if (param === 'role' && res.locals.user.role !== 'admin') {
-            res.send(403).send('Error: Only an administrator can update user roles')
+            res.send(403).send('Error: Only an administrator can promote admins')
           } else {
             const element = req.body[param]
             user[param] = element
@@ -62,6 +62,13 @@ async function getOwnUser (req, res, next) {
     const user = await Users.findOne({ email: res.locals.user.email })
       .populate('favourites')
       .populate('bookings')
+      .populate({
+        path: 'bookings',
+        populate: {
+          path: 'center',
+          model: 'center'
+        }
+      })
     res.status(200).json({user: user})
   } catch (error) { next(error) }
 }
@@ -77,12 +84,16 @@ async function updateOwnUser (req, res, next) {
 
     for (const param in req.body) { // For each param in the body, update user's param
       if (Object.hasOwnProperty.call(req.body, param)) {
-          if (param === 'role' && res.locals.user.role !== 'admin') {
-            res.send(403).send('Error: Only an administrator can update user roles')
-          } else {
+        if (param === 'role' && res.locals.user.role !== 'admin') {
+          if (param === 'admin') { res.send(403).send('Error: Only an administrator can promote admins') }
+          else {
             const element = req.body[param]
             user[param] = element
           }
+        } else {
+          const element = req.body[param]
+          user[param] = element
+        }
       }
     }
     user.save() // Save updated user

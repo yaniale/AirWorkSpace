@@ -17,7 +17,8 @@ const {
 } = require('../controllers/user.controller')
 
 const {
-  getUserBookings
+  getUserBookings,
+  cancelBooking
 } = require('../controllers/booking.controller')
 
 router.get('/', checkAuth, checkAdmin, getAllUsers)
@@ -27,6 +28,7 @@ router.delete('/profile', checkAuth, deleteOwnUser)
 router.get('/profile/favourites', checkAuth, getFavourites)
 router.put('/profile/favourites/:id', checkAuth, manageFavourite)
 router.get('/profile/bookings', checkAuth, getUserBookings)
+router.put('/profile/bookings/:id', checkAuth, cancelBooking)
 router.get('/:id', checkAuth, checkAdmin, getUser)
 router.put('/:id', checkAuth, checkAdmin, updatetUser)
 router.delete('/:id', checkAuth, checkAdmin, deleteUser)
