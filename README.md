@@ -18,27 +18,34 @@ The Authentication flow for the application is:
 
 METHOD | ENDPOINT         | TOKEN | ROLE | DESCRIPTION        | POST PARAMS                                     | RETURNS
 -------|------------------|-------|------|--------------------|-------------------------------------------------|--------------------
-POST   | /auth/signup     | YES   | Admin| User Signup        | `name`, `lastName`, `email`, `password`         | `token`
+POST   | /auth/signup     |       |      | User Signup        | `name`, `lastName`, `email`, `password`         | `token`
 POST   | /auth/login      | -     |      | User Login         | `email`, `password`                             | `token`
 
 ### User Endpoints
 
 METHOD | ENDPOINT         | TOKEN | ROLE | DESCRIPTION              | POST PARAMS                                     | RETURNS
 -------|------------------|-------|------|--------------------|-------------------------------------------------|--------------------
-GET   | /user/profile/:id    | YES     | | Get My Profile            | - | `profile`
-PATCH   | /user/profile/:id    | YES     | | Update My Profile            | - | `profile`
+GET    | /user/  | YES     | Admin| Get all users           | - | `profile`
+GET    | /user/:id   | YES | Admin | Get one user            | - | `profile`
+PUT    | /user/:id   | YES | Admin | Update one user            | - | `profile`
+DELETE | /user/:id   | YES | Admin | Delete one user            | - | 
+GET    | /user/profile   | YES     | | Get My Profile            | - | `profile`
+PUT    | /user/profile    | YES     | | Update My Profile            | - | `profile`
+DELETE | /user/profile    | YES     | Admin | Delete a user            | - |
 
 ### Center Endpoints
 
-METHOD | ENDPOINT         | TOKEN | ROLE | DESCRIPTION              | POST PARAMS                                     | RETURNS
+METHOD | ENDPOINT         | TOKEN | ROLE | DESCRIPTION        | POST PARAMS                                     | RETURNS
 -------|------------------|-------|------|--------------------|-------------------------------------------------|--------------------
-GET   | /center   |      | | Get all workspaces            | - | `workspaces`
-GET   | /center/:id       |       |       | Get one workspace | | `workspace` 
-POST  | /center           | YES   | Host  | Create a workspace  | `name` `type` `description` `photos` `location` `contact` `services` `ratePlan` | center created
-PATCH | /center/:id       | YES   | Host  | Update a workspace  |  |  workspace updated
-DELETE | /center/:id      | YES   | Host  | Delete a workspace  |   | 
+GET   | /center           |       |      | Get all workspaces       | - | `workspaces`
+GET   | /center/:id       |       |      | Get one workspace    | | `workspace` 
+POST  | /center           | YES   | Host | Create a workspace  | `name` `type` `description` `photos` `location` `contact` `services` `ratePlan` | center created
+PATCH | /center/:id       | YES   | Host | Update a workspace  |  |  workspace updated
+DELETE | /center/:id      | YES   | Host | Delete a workspace  |   | 
 POST  | /center/:id/booking  | YES   | User  | Create a booking    | `fromTime``toTime``type``ratePlan`  | Booked workspace
 PATCH  | /center/:id/booking/:id/status  | YES   | Host/User  | Update booking status   |   | Updated workspace
+POST  | /center/:id/rate  | YES   | Host | Create rateplans   | `name` `appliesTo` `fromDate``toDate` `description``rate` | ratePlan created
+PUT  | /center/:id/rate/:id  | YES   | Host | Update rateplan   |  | ratePlan updated
 
 ### Services Endpoints
 
@@ -49,4 +56,4 @@ PATCH | /service/:id       | YES   | Admin  | Update a service  |  |  service up
 DELETE | /service/:id      | YES   | Admin  | Delete a service  |   | 
 
 
- 
+
