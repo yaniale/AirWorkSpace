@@ -14,15 +14,19 @@ async function createCenter(req, res, next) {
 
 async function getAllCenters(req, res, next) {
     try {
-        var query = {
-            $or: [{ name: new RegExp(req.query.query, 'i') },
-                { description: new RegExp(req.query.query, 'i') },
-                { address1: new RegExp(req.query.query, 'i') },
-                { address2: new RegExp(req.query.query, 'i') },
-                { country: new RegExp(req.query.query, 'i') },
-                { city: new RegExp(req.query.query, 'i') },
-                { owner: req.query.query }
-                ]
+        var query = ''
+        if (req.query.owner) {
+            query = { owner: req.query.owner }
+        } else {
+            query = {
+                $or: [{ name: new RegExp(req.query.query, 'i') },
+                    { description: new RegExp(req.query.query, 'i') },
+                    { address1: new RegExp(req.query.query, 'i') },
+                    { address2: new RegExp(req.query.query, 'i') },
+                    { country: new RegExp(req.query.query, 'i') },
+                    { city: new RegExp(req.query.query, 'i') }
+                    ]
+            }
         }
         var search = await Center.find(query)
             .populate('bookings')
