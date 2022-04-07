@@ -26,7 +26,14 @@ async function getAllCenters(req, res, next) {
         }
         var search = await Center.find(query)
             .populate('bookings')
-            .populate('customerId')
+            .populate(
+                {
+                    path: 'bookings',
+                    populate: {
+                        path: 'customerId',
+                        model: 'user'
+                    }
+                })
         res.status(200).send(search)
     } catch (error) {
         next(error)
