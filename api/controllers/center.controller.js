@@ -25,6 +25,7 @@ async function getAllCenters(req, res, next) {
                 ]
         }
         var search = await Center.find(query)
+            .populate('bookings')
         res.status(200).send(search)
     } catch (error) {
         next(error)
