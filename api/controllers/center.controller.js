@@ -21,7 +21,7 @@ async function getAllCenters(req, res, next) {
                 { address2: new RegExp(req.query.query, 'i') },
                 { country: new RegExp(req.query.query, 'i') },
                 { city: new RegExp(req.query.query, 'i') },
-                { owner: new RegExp(req.query.query, 'i') }
+                { owner: req.query.query }
                 ]
         }
         var search = await Center.find(query)
