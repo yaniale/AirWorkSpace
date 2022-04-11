@@ -49,6 +49,14 @@ const centerSchema = new mongoose.Schema({
     phone: {
         type: String
     },
+    location: {
+        lat: {
+            type: Number
+        },
+        lng: {
+            type: Number
+        }
+    },
     mobile: {
         type: String
     },
