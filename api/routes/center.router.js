@@ -16,7 +16,8 @@ const {
 } = require('../controllers/center.controller')
 
 const {
-    createBooking
+    createBooking,
+    updateBookingStatus
 } = require('../controllers/booking.controller')
 
 router.get('/', getAllCenters)
@@ -27,5 +28,7 @@ router.put('/:id/rateplan', checkAuth, checkHost, manageRatePlan)
 router.post('/:id/bookings', checkAuth, createBooking)
 router.put('/:id', checkAuth, checkHost, updateCenter)
 router.delete('/:id', checkAuth, checkHost, deleteCenter)
+router.put('/:id/bookings/:bookingId', checkAuth, checkHost, updateBookingStatus)
+
 
 module.exports = router
