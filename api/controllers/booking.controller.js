@@ -20,8 +20,8 @@ async function createBooking(req, res, next) {
 
         const user = await User.findById(res.locals.user.id)
             .populate('bookings')
-        
-        
+
+
         const ratePlan = center.ratePlan.find(e => e.status === 'active' && e.id === req.body.ratePlan)
 
         if (ratePlan) {
@@ -50,12 +50,27 @@ async function cancelBooking(req, res, next) {
         booking.save()
         res.status(200).send({message: 'Booking Cancelled', data: booking})
     } catch (error) {
-        
+        next(error)
     }
 }
 
+async function updateBookingStatus(req, res, next) {
+    try {
+        const booking = await Booking.findById(req.params.id)
+        if(req.body.status) {
+            booking.status = req.body.status
+            booking.save()
+            res.status(200).send({message: 'Booking status updated', data: booking})
+        } else {
+            res.status(500).send({message: 'You can only update booking status', data: booking})
+        }
+    } catch (error) {
+        next(error)
+    }
+}
 module.exports = {
     getUserBookings,
     createBooking,
-    cancelBooking
+    cancelBooking,
+    updateBookingStatus
 }
