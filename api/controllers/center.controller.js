@@ -5,7 +5,6 @@ async function createCenter(req, res, next) {
     try {
         req.body.owner = res.locals.user.id
         const center = await Center.create(req.body)
-        center.save()
         res.status(200).send({message: 'Center successfully created', data: center})
     } catch (error) {
         next(error)
@@ -57,12 +56,12 @@ async function updateCenter(req, res, next) {
     try {
         const center = await Center.findById(req.params.id)
             .populate('owner')
-        
+
         if (center.owner.id === res.locals.user.id) {
             for (const param in req.body) {
                 if (Object.hasOwnProperty.call(req.body, param)) {
                     const element = req.body[param];
-                    center[param] = element                    
+                    center[param] = element
                 }
             }
             center.save()
@@ -87,7 +86,7 @@ async function deleteCenter(req, res, next) {
             res.status(500).send({ message: 'Unauthorized to perform this action. You are not this center owner.' })
         }
     } catch (error) {
-        
+
     }
 }
 
@@ -95,7 +94,7 @@ async function manageAllotment(req, res, next) {
     try {
         const allotment = req.body
         const center = await Center.findById(req.params.id)
-        
+
         console.log(allotment.hasOwnProperty('idx'))
 
         if (allotment.hasOwnProperty('idx')) {
@@ -123,7 +122,7 @@ async function manageRatePlan(req, res, next) {
     try {
         const ratePlan = req.body
         const checkExists = ratePlan.hasOwnProperty('idx')
-        
+
         const center = await Center.findById(req.params.id)
             .populate('ratePlan')
 
