@@ -56,7 +56,7 @@ async function cancelBooking(req, res, next) {
 
 async function updateBookingStatus(req, res, next) {
     try {
-        const booking = await Booking.findById(req.params.id)
+        const booking = await Booking.findById(req.params.bookingId)
         if(req.body.status) {
             booking.status = req.body.status
             booking.save()
@@ -68,6 +68,7 @@ async function updateBookingStatus(req, res, next) {
         next(error)
     }
 }
+
 module.exports = {
     getUserBookings,
     createBooking,
